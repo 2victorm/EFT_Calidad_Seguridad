@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Solicitudes de Adopción</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+<body>
+<div class="page-container">
+    <h1>Solicitudes de Adopción</h1>
+    <div class="actions">
+        <a class="btn btn-secondary" th:href="@{/home}">Volver a inicio</a>
+    </div>
+
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+
+    <div class="table-wrapper">
+        <table class="patients-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Solicitante</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Mascota</th>
+                <th>Mensaje</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+            </thead>
+            <tbody id="solicitudesTableBody">
+            <tr><td colspan="8">Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/auth.js"></script>
+<script>
+    apiFetch('/api/solicitudes')
+    .then(r => r.json())
+    .then(data => {
+        const tbody = document.getElementById('solicitudesTableBody');
+        if (!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8">No hay solicitudes registradas.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.map(s => `
+            <tr>
+                <td>${s.id}</td>
+                <td>${s.nombreSolicitante}</td>
+                <td>${s.emailSolicitante}</td>
+                <td>${s.telefonoSolicitante}</td>
+                <td>${s.mascota ? s.mascota.name : '-'}</td>
+                <td>${s.mensaje}</td>
+                <td><span class="badge">${s.estado}</span></td>
+                <td>${s.fechaSolicitud ? s.fechaSolicitud.substring(0,10) : '-'}</td>
+            </tr>`).join('');
+    })
+    .catch(() => {
+        document.getElementById('solicitudesTableBody').innerHTML =
+            '<tr><td colspan="8">Error al cargar solicitudes.</td></tr>';
+    });
+</script>
+</body>
+</html>

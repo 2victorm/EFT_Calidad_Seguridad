@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nueva Solicitud de Adopción</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+</head>
+<body>
+<div class="page-container">
+    <h1>Solicitar Adopción</h1>
+
+    <form class="patient-form" id="solicitudForm">
+        <input type="hidden" id="petId" th:value="${petId}" />
+        <div>
+            <label>Nombre completo:</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" required />
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="email" id="email" placeholder="tu@email.com" required />
+        </div>
+        <div>
+            <label>Teléfono:</label>
+            <input type="text" id="telefono" placeholder="+56 9 1234 5678" required />
+        </div>
+        <div>
+            <label>Mensaje:</label>
+            <textarea id="mensaje" rows="4" placeholder="¿Por qué quieres adoptar esta mascota?"></textarea>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Enviar Solicitud</button>
+            <a class="btn btn-secondary" th:href="@{/pets}">Cancelar</a>
+        </div>
+        <div id="resultado" style="margin-top:1rem;"></div>
+    </form>
+</div>
+<script src="/auth.js"></script>
+<script>
+    document.getElementById('solicitudForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const body = {
+            petId: parseInt(document.getElementById('petId').value),
+            nombreSolicitante: document.getElementById('nombre').value,
+            emailSolicitante: document.getElementById('email').value,
+            telefonoSolicitante: document.getElementById('telefono').value,
+            mensaje: document.getElementById('mensaje').value
+        };
+        apiFetch('/api/solicitudes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+        .then(r => r.json())
+        .then(() => {
+            document.getElementById('resultado').innerHTML =
+                '<p style="color:green">✔ Solicitud enviada exitosamente.</p>';
+            setTimeout(() => { window.location.href = '/solicitudes'; }, 1500);
+        })
+        .catch(() => {
+            document.getElementById('resultado').innerHTML =
+                '<p style="color:red">Error al enviar la solicitud.</p>';
+        });
+    });
+</script>
+</body>
+</html>
