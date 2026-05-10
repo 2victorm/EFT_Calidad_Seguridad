@@ -86,6 +86,9 @@
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
 				<version>12.2.0</version>
+				<configuration>
+					<suppressionFile>suppressions.xml</suppressionFile>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>

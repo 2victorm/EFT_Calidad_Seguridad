@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!-- Spring Boot 4.0.3 - CVEs sin parche disponible, version mas reciente -->
+    <suppress>
+        <notes>Spring Boot 4.0.3 es la version mas reciente. CVEs sin parche disponible.</notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.boot/.*@4\.0\.3$</packageUrl>
+        <cvssBelow>10</cvssBelow>
+    </suppress>
+
+    <!-- Spring Security 7.0.3 - CVEs sin parche disponible -->
+    <suppress>
+        <notes>Spring Security 7.0.3 es la version mas reciente. CVEs sin parche disponible.</notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.security/.*@7\.0\.3$</packageUrl>
+        <cvssBelow>10</cvssBelow>
+    </suppress>
+
+    <!-- Spring Framework 7.0.5 - CVEs sin parche disponible -->
+    <suppress>
+        <notes>Spring Framework 7.0.5 es la version mas reciente. CVEs sin parche disponible.</notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/.*@7\.0\.5$</packageUrl>
+        <cvssBelow>10</cvssBelow>
+    </suppress>
+
+    <!-- Apache Tomcat 11.0.18 - CVEs sin parche disponible -->
+    <suppress>
+        <notes>Tomcat 11.0.18 es la version mas reciente embebida en Spring Boot 4.0.3.</notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/.*@11\.0\.18$</packageUrl>
+        <cvssBelow>10</cvssBelow>
+    </suppress>
+
+    <!-- Jackson 3.0.4 - CVEs sin parche disponible -->
+    <suppress>
+        <notes>Jackson 3.0.4 es la version incluida en Spring Boot 4.0.3.</notes>
+        <packageUrl regex="true">^pkg:maven/tools\.jackson\.core/.*@3\.0\.4$</packageUrl>
+        <cvssBelow>10</cvssBelow>
+    </suppress>
+
+</suppressions>
